@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:calculator/widgets/buttons_in_row.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,11 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Simple Calculator',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Simple Calculator'),
     );
   }
 }
@@ -29,11 +30,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  String text = "";
 
-  void _incrementCounter() {
+  void _addText(String ch) {
     setState(() {
-      _counter++;
+      text += ch;
+    });
+  }
+
+  void _clearText() {
+    setState(() {
+      text = "";
+    });
+  }
+
+  void _deleteText() {
+    setState(() {
+      text = text.substring(0, text.length-1);
     });
   }
 
@@ -44,119 +57,50 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Row(
-            children: const [
+            children: [
               Expanded(
-                child: Text("1+1", textAlign: TextAlign.right,),
+                child: Text(
+                  text, 
+                  style: const TextStyle(fontSize: 58),
+                  textAlign: TextAlign.right,
+                ),
               ),
             ],
           ),
-          Row(children: [
-            const SizedBox(width: 10,),
-            Expanded(
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("Clear All")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded(
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("^")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded( 
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text(",")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded( 
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("Delete")),
-            ),
-            const SizedBox(width: 5,),
-          ],),
+          const SizedBox(height: 8,),
+          ButtonsInRow(
+            btn1Func: _clearText, btn1Text: "Clear All", 
+            btn2Func: () => { _addText("^") }, btn2Text: "^", 
+            btn3Func: () => { _addText(",") }, btn3Text: ",", 
+            btn4Func: () => { _deleteText() }, btn4Text: "Delete"),
           const SizedBox(height: 5,),
-          Row(children: [
-            const SizedBox(width: 10,),
-            Expanded(
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("7")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded(
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("8")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded( 
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("9")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded( 
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("+")),
-            ),
-            const SizedBox(width: 5,),
-          ],),
+          ButtonsInRow(
+            btn1Func: () => { _addText("7")}, btn1Text: "7", 
+            btn2Func: () => { _addText("8") }, btn2Text: "8", 
+            btn3Func: () => { _addText("9") }, btn3Text: "9", 
+            btn4Func: () => { _addText("+")}, btn4Text: "+"),
           const SizedBox(height: 5,),
-          Row(children: [
-            const SizedBox(width: 10,),
-            Expanded(
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("4")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded(
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("5")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded( 
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("6")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded( 
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("-")),
-            ),
-            const SizedBox(width: 5,),
-          ],),
+          ButtonsInRow(
+            btn1Func: () => { _addText("4")}, btn1Text: "4", 
+            btn2Func: () => { _addText("5") }, btn2Text: "5", 
+            btn3Func: () => { _addText("6") }, btn3Text: "6", 
+            btn4Func: () => { _addText("-")}, btn4Text: "-"),
           const SizedBox(height: 5,),
-          Row(children: [
-            const SizedBox(width: 10,),
-            Expanded(
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("1")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded(
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("2")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded( 
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("3")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded( 
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("x")),
-            ),
-            const SizedBox(width: 5,),
-          ],),
+          ButtonsInRow(
+            btn1Func: () => { _addText("1")}, btn1Text: "1", 
+            btn2Func: () => { _addText("2") }, btn2Text: "2", 
+            btn3Func: () => { _addText("3") }, btn3Text: "3", 
+            btn4Func: () => { _addText("x")}, btn4Text: "x"),
           const SizedBox(height: 5,),
-          Row(children: [
-            const SizedBox(width: 10,),
-            Expanded(
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("00")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded(
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("0")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded( 
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("000")),
-            ),
-            const SizedBox(width: 5,),
-            Expanded( 
-              child: ElevatedButton(onPressed: ()=> {}, child: const Text("/")),
-            ),
-            const SizedBox(width: 5,),
-          ],),
+          ButtonsInRow(
+            btn1Func: () => { _addText("00")}, btn1Text: "00", 
+            btn2Func: () => { _addText("0") }, btn2Text: "0", 
+            btn3Func: () => { _addText("000") }, btn3Text: "000", 
+            btn4Func: () => { _addText("/")}, btn4Text: "/"),
         ]
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
